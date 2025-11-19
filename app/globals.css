@@ -1,0 +1,153 @@
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+@plugin '@tailwindcss/typography';
+
+@plugin 'tailwind-scrollbar' {
+    preferredstrategy: 'pseudoelements';
+    nocompatible: true;
+}
+
+@theme {
+    --breakpoint-*: initial;
+    --breakpoint-xl: 1312px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-md: 768px;
+    --breakpoint-sm: 640px;
+
+    --color-background: #f9fafb;
+    --color-primary: #8059e3;
+    --color-primary-dark: #4f1ad6;
+    --color-border: #e5e7eb;
+    --color-gray: #6b7280;
+    --color-gray-light: #f3f4f6;
+    --color-gray-100: #f3f3f3;
+    --color-gray-200: #dee2e6;
+    --color-gray-300: #adb5bd;
+    --color-black: #232333;
+    --color-success: #22c55e;
+    --color-danger: #ff0000;
+    --color-warning: #ffa500;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+@layer components {
+    .container {
+        @apply mx-auto w-full px-4;
+    }
+
+    .sidebar .nav-item {
+        @apply text-gray hover:bg-primary/10 flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm/4.5 transition-colors hover:text-black;
+    }
+    .sidebar .submenu .nav-item {
+        @apply px-4 py-2 outline-none;
+    }
+    .nav-item.active,
+    .nav-item.sub-menu-active {
+        @apply bg-primary-dark! text-white! [&_svg]:!text-white;
+    }
+
+    .nav-item.active-danger {
+        @apply !text-red-600;
+    }
+    .landing-nav-item {
+        @apply hover:text-primary flex items-center gap-3 rounded-lg text-black transition-colors md:py-5;
+    }
+    .landing-nav-item.active {
+        @apply text-primary-dark font-medium;
+    }
+    .landing-footer-link {
+        @apply text-gray hover:text-primary-dark text-sm/5 transition;
+    }
+}
+
+button {
+    @apply cursor-pointer;
+}
+html {
+    @apply scroll-smooth;
+}
+.sidebar.closed h3 {
+    @apply rounded-none;
+}
+.sidebar.closed h3 > span {
+    @apply lg:hidden;
+}
+.sidebar.closed h3 > svg {
+    @apply lg:block;
+}
+.sidebar.closed .submenu {
+    @apply lg:hidden;
+}
+.sidebar.closed .logout {
+    @apply lg:px-2;
+}
+.sidebar.closed .nav-item .arrow {
+    @apply lg:hidden;
+}
+.sidebar .nav-link span {
+    @apply whitespace-nowrap transition-all;
+}
+.sidebar.closed .nav-item span,
+.sidebar.closed .accordion-trigger span {
+    @apply lg:invisible lg:w-0;
+}
+.sidebar.closed .accordion-content {
+    @apply ml-0.5;
+}
+.sidebar.closed .sidemenu {
+    @apply px-2.5 pt-3 lg:px-2;
+}
+.sidebar.closed .logo {
+    @apply lg:justify-center;
+}
+.sidebar.closed .logo {
+    @apply lg:px-0;
+}
+.sidebar.closed .logo-full {
+    @apply lg:hidden;
+}
+.sidebar.closed .logo-icon {
+    @apply lg:block!;
+}
+.sidebar.closed .logout {
+    @apply justify-center;
+}
+.sidebar.closed .logout span {
+    @apply lg:hidden;
+}
+.sidebar.closed .usage-block {
+    @apply hidden;
+}
+.sidebar.open {
+    @apply left-0;
+}
+#overlay.open {
+    @apply block;
+}
+
+#landing-sidebar.open {
+    @apply left-0;
+}
+
+@keyframes accordion-down {
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--radix-accordion-content-height);
+    }
+}
+@keyframes accordion-up {
+    from {
+        height: var(--radix-accordion-content-height);
+    }
+    to {
+        height: 0;
+    }
+}
+
+.word-break {
+    word-break: break-word;
+}
