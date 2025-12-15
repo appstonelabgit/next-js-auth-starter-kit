@@ -5,11 +5,11 @@ import { useAuth } from '@/hooks/use-auth'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-export default function VerifyRedirect() {
+export default function VerifyRedirect(props: { token?: string }) {
     const { verifyEmail } = useAuth()
     const router = useRouter()
     const searchParams = useSearchParams()
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(!!props.token)
 
     useEffect(() => {
         const token = searchParams.get('token')
@@ -23,7 +23,6 @@ export default function VerifyRedirect() {
                     }
                 })
                 .catch(() => setLoading(false))
-        } else {
         }
     }, [searchParams, router, verifyEmail])
 

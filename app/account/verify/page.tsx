@@ -7,7 +7,12 @@ import { redirect } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
-export default async function Page() {
+export default async function Page(props: {
+    searchParams: Promise<{
+        token?: string
+    }>
+}) {
+    const searchParams = await props.searchParams
     const user = await userRepository.getUser()
     if (!user) {
         redirect(LOGIN_PAGE)
@@ -19,7 +24,7 @@ export default async function Page() {
 
     return (
         <>
-            <VerifyRedirect />
+            <VerifyRedirect token={searchParams?.token} />
 
             <div className="bg-background flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
                 <div className="w-full max-w-150 space-y-8">
