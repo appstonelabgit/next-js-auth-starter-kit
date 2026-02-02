@@ -1,11 +1,13 @@
 'use client'
+
+import { cn } from '@/lib/utils'
 import { Input } from './input'
 import { Label } from './label'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import { useState } from 'react'
-import { UseFormRegisterReturn } from 'react-hook-form'
+import type { UseFormRegisterReturn } from 'react-hook-form'
 
-type PasswordInputProps = {
+interface PasswordInputProps {
     id: string
     label: string
     placeholder?: string
@@ -14,19 +16,19 @@ type PasswordInputProps = {
     register?: UseFormRegisterReturn
 }
 
-export const PasswordInput = ({
+export function PasswordInput({
     id,
     label,
     placeholder,
     register,
     labelClass,
     required = true,
-}: PasswordInputProps) => {
+}: PasswordInputProps) {
     const [showPassword, setShowPassword] = useState(false)
 
     return (
         <div>
-            <Label htmlFor={id} className={`${labelClass} mb-2`}>
+            <Label htmlFor={id} className={cn('mb-2', labelClass)}>
                 {label}
             </Label>
             <div className="relative">
@@ -35,7 +37,7 @@ export const PasswordInput = ({
                     type={showPassword ? 'text' : 'password'}
                     placeholder={placeholder}
                     className="pr-10"
-                    {...register}
+                    {...(register ?? {})}
                     required={required}
                 />
                 <button

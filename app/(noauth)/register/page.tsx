@@ -15,7 +15,7 @@ export default function Page() {
     const router = useRouter()
     const searchParams = useSearchParams()
 
-    const { register: signup } = useAuth()
+    const { signUp } = useAuth()
 
     const {
         register,
@@ -33,14 +33,16 @@ export default function Page() {
 
     const handleForm: SubmitHandler<IRegister> = async (data) => {
         try {
-            await signup({
+            await signUp({
                 ...data,
                 redirect: encodeURIComponent(
-                    searchParams.get('redirect') || '/app',
+                    searchParams.get('redirect') ?? '/app',
                 ),
             })
             router.refresh()
-        } catch {}
+        } catch {
+            //
+        }
     }
 
     return (
@@ -76,10 +78,12 @@ export default function Page() {
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <Label>Email address*</Label>
+                        <Label htmlFor="email">Email address*</Label>
                         <Input
+                            id="email"
                             {...register('email')}
-                            type="text"
+                            type="email"
+                            autoComplete="email"
                             required
                             placeholder="Enter your email"
                         />
@@ -104,7 +108,7 @@ export default function Page() {
                         />
                     </div>
 
-                    <div className="mt-6!">
+                    <div className="mt-6">
                         <Button
                             loading={isSubmitting}
                             type="submit"
@@ -140,7 +144,7 @@ export default function Page() {
                     Already have an account?{' '}
                     <Link
                         href={`${LOGIN_PAGE}?redirect=${encodeURIComponent(
-                            searchParams.get('redirect') || '/app',
+                            searchParams.get('redirect') ?? '/app',
                         )}`}
                         className="text-primary hover:text-primary-dark font-medium transition hover:underline hover:underline-offset-4"
                     >

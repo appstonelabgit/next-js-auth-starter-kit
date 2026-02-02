@@ -31,11 +31,13 @@ export default function Page() {
             const isLoggedIn = await login({
                 ...data,
                 redirect: encodeURIComponent(
-                    searchParams.get('redirect') || '/app',
+                    searchParams.get('redirect') ?? '/app',
                 ),
             })
             if (isLoggedIn) router.refresh()
-        } catch {}
+        } catch {
+            //
+        }
     }
 
     return (
@@ -46,10 +48,12 @@ export default function Page() {
                     onSubmit={handleSubmit(handleForm)}
                 >
                     <div className="space-y-2">
-                        <Label>Email address*</Label>
+                        <Label htmlFor="email">Email address*</Label>
                         <Input
+                            id="email"
                             {...register('email')}
-                            type="text"
+                            type="email"
+                            autoComplete="email"
                             placeholder="Enter your email"
                         />
                     </div>
@@ -62,7 +66,7 @@ export default function Page() {
                             register={register('password')}
                         />
                     </div>
-                    <div className="mt-6!">
+                    <div className="mt-6">
                         <Button
                             loading={isSubmitting}
                             type="submit"
@@ -106,7 +110,7 @@ export default function Page() {
                     Don&apos;t have an account?{' '}
                     <Link
                         href={`/register?redirect=${encodeURIComponent(
-                            searchParams.get('redirect') || '/app',
+                            searchParams.get('redirect') ?? '/app',
                         )}`}
                         className="text-primary hover:text-primary-dark font-medium transition hover:underline hover:underline-offset-4"
                     >

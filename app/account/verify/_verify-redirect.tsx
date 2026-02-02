@@ -16,11 +16,10 @@ export default function VerifyRedirect(props: { token?: string }) {
         if (token) {
             verifyEmail(token)
                 .then(() => {
-                    if (searchParams.get('redirect')) {
-                        router.replace(searchParams.get('redirect') || '/app')
-                    } else {
-                        router.replace('/app')
-                    }
+                    const redirectTo = searchParams.get('redirect')
+                    router.replace(
+                        redirectTo ? decodeURIComponent(redirectTo) : '/app',
+                    )
                 })
                 .catch(() => setLoading(false))
         }

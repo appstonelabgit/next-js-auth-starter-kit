@@ -25,7 +25,9 @@ export default function Page() {
     const handleForm: SubmitHandler<IForgotPassword> = async (data) => {
         try {
             await forgotPassword(data)
-        } catch {}
+        } catch {
+            //
+        }
     }
 
     return (
@@ -40,10 +42,12 @@ export default function Page() {
                 </div>
                 <form className="space-y-6" onSubmit={handleSubmit(handleForm)}>
                     <div className="space-y-2">
-                        <Label>Email address*</Label>
+                        <Label htmlFor="email">Email address*</Label>
                         <Input
+                            id="email"
                             {...register('email')}
-                            type="text"
+                            type="email"
+                            autoComplete="email"
                             placeholder="Enter your email"
                         />
                     </div>

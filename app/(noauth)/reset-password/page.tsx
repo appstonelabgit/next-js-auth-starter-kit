@@ -10,7 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 export default function Page() {
     const router = useRouter()
-    const query = useSearchParams()
+    const searchParams = useSearchParams()
     const { resetPassword } = useAuth()
 
     const {
@@ -25,10 +25,17 @@ export default function Page() {
     })
 
     const handleForm: SubmitHandler<IResetPassword> = async (data) => {
-        try {
-            await resetPassword(query?.get('token') as string, data)
+        const token = searchParams.get('token')
+        if (!token) {
             router.push(LOGIN_PAGE)
-        } catch {}
+            return
+        }
+        try {
+            await resetPassword(token, data)
+            router.push(LOGIN_PAGE)
+        } catch {
+            //
+        }
     }
 
     return (
@@ -63,7 +70,7 @@ export default function Page() {
                         />
                     </div>
 
-                    <div className="mt-6!">
+                    <div className="mt-6">
                         <Button
                             loading={isSubmitting}
                             type="submit"

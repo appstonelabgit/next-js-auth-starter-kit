@@ -1,14 +1,13 @@
 import { userRepository } from '@/repositories/user'
 import { redirect } from 'next/navigation'
+import { HOME_PAGE } from '@/lib/redirect'
 
 export default async function NoAuthLayout({
     children,
-}: Readonly<{
-    children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
     const user = await userRepository.getUser()
     if (user) {
-        redirect('/app')
+        redirect(HOME_PAGE)
     }
 
     return (
